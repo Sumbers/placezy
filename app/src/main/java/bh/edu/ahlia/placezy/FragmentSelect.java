@@ -34,8 +34,6 @@ public class FragmentSelect extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -75,6 +73,7 @@ public class FragmentSelect extends Fragment implements AdapterView.OnItemSelect
         System.out.println("place selectionnée = " + placeSelected);
         mListener.onPlaceSelected(placeSelected);
         //TODO faire les requetes au serveur google pour récupérer les informations de la place
+
 
     }
 

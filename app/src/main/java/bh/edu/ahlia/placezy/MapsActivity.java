@@ -1,26 +1,14 @@
 package bh.edu.ahlia.placezy;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.provider.Settings;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,9 +16,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
+import org.json.JSONException;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, FragmentSelect.SelectFragmentListener {
+public class MapsActivity extends FragmentActivity implements IApiCallTask, OnMapReadyCallback, FragmentSelect.SelectFragmentListener {
 
     private GoogleMap mMap;
     private ConnexionState coState = null;
@@ -100,17 +88,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng defaultPos;
         // Add a marker in my pos and move the camera
         if (location != null) {
-            LatLng myPos = new LatLng(location.getLatitude(), location.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(myPos).title("Me"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(myPos));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPos, 10.0F));
+            defaultPos = new LatLng(location.getLatitude(), location.getLongitude());
         }
+        else {
+            defaultPos = new LatLng(26.236440, 50.590090);
+        }
+        mMap.addMarker(new MarkerOptions().position(defaultPos).title("Me"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(defaultPos));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultPos, 10.0F));
+
+        new ApiCallTask(this, ApiCallTask.OBJECT, "displayPlace").execute(
+                "AIzaSyA4tEUNxP6-k5XZ77BVtAO4IqAmAZlFBNE",
+                "en",
+                defaultPos.latitude + "," + defaultPos.longitude,
+                "3000",
+                "hospital%7bank%7library%7mosque%7bus_station%7cafe%7clothing_store%7pharmacy%7parking%7park");
     }
 
     @Override
     public void onPlaceSelected(String placeSelected) {
+
+    }
+
+    @Override
+    public void onBackgroundTaskCompleted(Places places, int type, String action) throws JSONException {
+        System.out.println("nombre de resultat = " + places.getResults().size());
+        for (Result result : places.getResults()){
+            System.out.println("nom de la place = " + result.getName());
+        }
+//        if (action == "displayPlace")
+//            displayPlaces(places);
+    }
+
+    private void displayPlaces(Places places) {
 
     }
 }
