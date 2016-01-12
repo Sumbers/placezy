@@ -10,13 +10,14 @@
         <item>all</item>
         <item>hospital</item>
         <item>bank</item>
-        <item>library</item>
+        <item>hotel</item>
         <item>mosque</item>
-        <item>bus_station</item>
+        <item>restaurant</item>
         <item>cafe</item>
-        <item>clothing_store</item>
+        <item>clothing store</item>
         <item>pharmacy</item>
-        <item>parking</item>
         <item>park</item>
     </string-array>
+
+    <string name="google_places_api">AIzaSyA4tEUNxP6-k5XZ77BVtAO4IqAmAZlFBNE</string>
 </resources>

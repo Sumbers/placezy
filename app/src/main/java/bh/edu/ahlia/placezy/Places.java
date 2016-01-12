@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class Places {
     private List<Object> htmlAttributions = new ArrayList<Object>();
+    private String nextPageToken;
     private List<Result> results = new ArrayList<Result>();
     private String status;
 
@@ -27,6 +28,24 @@ public class Places {
      */
     public void setHtmlAttributions(List<Object> htmlAttributions) {
         this.htmlAttributions = htmlAttributions;
+    }
+
+    /**
+     *
+     * @return
+     * The nextPageToken
+     */
+    public String getNextPageToken() {
+        return nextPageToken;
+    }
+
+    /**
+     *
+     * @param nextPageToken
+     * The next_page_token
+     */
+    public void setNextPageToken(String nextPageToken) {
+        this.nextPageToken = nextPageToken;
     }
 
     /**

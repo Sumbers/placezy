@@ -2,19 +2,20 @@ package bh.edu.ahlia.placezy;
 
 import android.os.AsyncTask;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-import retrofit.Call;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import okhttp3.OkHttpClient;
+
+import retrofit2.Call;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by Sumbers on 05/01/2016.
@@ -31,7 +32,7 @@ public class ApiCallTask extends AsyncTask<String, Integer, Places> {
     //choosea language of displayed datas : ar (arabic), en (english), fr (french)
     public static final String LANGUAGE = "language";
     //separate types of place researched as : hospital|drug_store
-    public static final String TYPE = "type";
+    public static final String TYPE = "types";
 
     public static final String URL_API = "https://maps.googleapis.com/maps/api/";
 
@@ -58,7 +59,7 @@ public class ApiCallTask extends AsyncTask<String, Integer, Places> {
             Call<Places> listPlacesCall = doGet(params);
             System.out.println("j'ai recupéré la requète");
 
-            retrofit.Response reponse = listPlacesCall.execute();
+            Response reponse = listPlacesCall.execute();
             System.out.println("j'ai excecuté la requete");
 
             if (reponse.isSuccess())
@@ -119,7 +120,13 @@ public class ApiCallTask extends AsyncTask<String, Integer, Places> {
                              @Query("language") String langInfos,
                              @Query("location") String userLocation,
                              @Query("radius") String radiusResearch,
-                             @Query("place") String placesResearch);
+                             @Query("types") String placesResearch);
+    }
+
+    public interface getPlacesWithTokenService {
+        @GET("place/nearbysearch/json")
+        Call<Places> getPlaces(@Query("key") String keyApi,
+                               @Query("pagetoken") String pageToken);
     }
 
 }

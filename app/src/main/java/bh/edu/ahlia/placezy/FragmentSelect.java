@@ -71,7 +71,7 @@ public class FragmentSelect extends Fragment implements AdapterView.OnItemSelect
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String placeSelected = (String) parent.getItemAtPosition(position);
         System.out.println("place selectionnée = " + placeSelected);
-        mListener.onPlaceSelected(placeSelected);
+        mListener.onPlaceSelected(placeSelected.replace(" ", "_"));
         //TODO faire les requetes au serveur google pour récupérer les informations de la place
 
 
